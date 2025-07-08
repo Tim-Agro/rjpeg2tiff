@@ -2,6 +2,7 @@
 import argparse
 import os
 import warnings
+import shutil
 from pathlib import Path
 import numpy as np
 import rasterio as rio
@@ -86,4 +87,7 @@ if __name__ == '__main__':
     opt.exiftool = ROOT / opt.exiftool / 'exiftool.exe'
     main(opt)
     print("Conversion completed.")
+    
+    if tmp_path.exists():
+        shutil.rmtree(tmp_path)  # remove the temporary raw16 folder
     print(f"TIFF images are saved in: {opt.output_path}")
