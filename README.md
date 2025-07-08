@@ -14,9 +14,8 @@ Sample R-JPEG data is available from the repository [dji_h20t_rpeg_to_tif](https
 1. Unzip the TSDK into your project folder (the folder where you have cloned or forked this repository).
 - *Note: by default, the `release_x64` build is used.*
 
-    > On Linux: 
-    >
-    > Before runing the Python scripts to convert the R-JPEG to 16-bit TIFF, add  the directory containing `dji_irp` to your library path:
+    > On Linux: <br>
+    > Before running the Python scripts to convert the R-JPEG to 16-bit TIFF, add  the directory containing `dji_irp` to your library path:
     >```bash
     > export LD_LIBRARY_PATH="/path/to/utility/bin/linux/release_x64:${LD_LIBRARY_PATH}"
     >```
@@ -24,10 +23,9 @@ Sample R-JPEG data is available from the repository [dji_h20t_rpeg_to_tif](https
 
 ### ExifTool
 1. Download the [exiftool](https://exiftool.org/).
-1. Unzip into your project folder
+1. Unzip into your project folder.
    
-   > On Windows: 
-   >
+   > On Windows: <br>
    > To enable command-line usage, rename `exiftool(-k).exe` to `exiftool.exe`.
 
 ## 🔄 Converting R-JPEG to 16-bit TIFF
@@ -42,7 +40,7 @@ python dji_rjpeg2raw.py --input_path input_path \
 - `--h`: Height of the DJI R-JPEG image
 - `--w`: Width of the DJI R-JPEG image
 - `--label`: Filter input files by filename label. Only the R-JPEG images containing this label will be processed. Default: `'T'` (filters for files such as `0001_T.JPG`)
-> *A corresponding \*.raw file is temporarily saved in a `raw16` folder located in the parent directory of the output path. After processing, the `raw16` folder is automatically removed.*  
+> *A corresponding \*.raw file is temporarily saved in a `raw16` folder located in the parent directory of the output path. After processing, the `raw16` folder is automatically removed.*    
 > *The EXIF metadata from the R-JPEG file is preserved and embedded in the output TIFF file.*
 
 <br>
