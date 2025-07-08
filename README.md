@@ -29,12 +29,14 @@ python dji_rjpeg2raw.py --input_path input_path \
 - `--h`: Height of the DJI R-JPEG image
 - `--w`: Width of the DJI R-JPEG image
 - `--label`: Filter input files by filename label. Only the R-JPEG images containing this label will be processed. Default: `'T'` (filters for files such as `0001_T.JPG`)
-> A corresponding *.raw file will be saved in the `raw16` folder in the parent directory of the output folder.
->
-> The EXIF metadata from the R-JPEG file is preserved and embedded in the output TIFF file.
+> *A corresponding \*.raw file is temporarily saved in a `raw16` folder located in the parent directory of the output path. After processing, the `raw16` folder is automatically removed.*  
+> *The EXIF metadata from the R-JPEG file is preserved and embedded in the output TIFF file.*
 
-A comparison of the original R-JPEG image and the converted TIFF image.
-![](image\rjpeg_vs_tiff.png)
+<br>
+
+*Comparison of the original R-JPEG image and the converted TIFF image*
+<img src="https://github.com/Tim-Agro/rjpeg2tiff/blob/main/image/rjpeg_vs_tiff.png" alt="img_title" width="750"/>
+<br>
 
 ## 🗺️ Generating orthomosaic in Agisoft Metashape
 For detailed instructions, please refer to [thermal imagery processing tutorial](https://agisoft.freshdesk.com/support/solutions/articles/31000158942-thermal-imagery-processing).
