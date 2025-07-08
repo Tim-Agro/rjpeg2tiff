@@ -4,7 +4,7 @@ This repository provides a tool to convert DJI R-JPEG (Radiometric JPEG) thermal
 ```bash
 pip install rasterio
 ```
-## 📁 Sample Data
+## 📁 Sample data
 Sample R-JPEG data is available from the repository [dji_h20t_rpeg_to_tif](https://github.com/tejakattenborn/dji_h20t_rpeg_to_tif/tree/main/sample_data).
 
 
@@ -36,5 +36,5 @@ python dji_rjpeg2raw.py --input_path input_path \
 A comparison of the original R-JPEG image and the converted TIFF image.
 ![](image\rjpeg_vs_tiff.png)
 
-## 🗺️ Generating Orthomosaic in Agisoft Metashape
+## 🗺️ Generating orthomosaic in Agisoft Metashape
 For detailed instructions, please refer to [thermal imagery processing tutorial](https://agisoft.freshdesk.com/support/solutions/articles/31000158942-thermal-imagery-processing).
