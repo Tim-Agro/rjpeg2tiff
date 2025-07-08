@@ -1,6 +1,7 @@
 
 import argparse
 import os
+import platform
 import warnings
 import shutil
 from pathlib import Path
@@ -11,7 +12,6 @@ from rasterio.errors import NotGeoreferencedWarning
 
 # Suppress the warning
 warnings.filterwarnings("ignore", category=NotGeoreferencedWarning)
-ROOT = Path(os.getcwd()).resolve()
 
 def call_tsdk(tsdk, input_path, output_path, label='T'):
     # conversion from DJI R-JPEG to RAW uint16 image
@@ -25,8 +25,12 @@ def call_tsdk(tsdk, input_path, output_path, label='T'):
                 rawfile_path = output_path / (im_name[:-4]+'.raw')
                 if os.path.exists(rawfile_path):
                     continue  # skip if the raw file already exists
-                param = f'-s "{input_path}/{im_name}" -a extract -o "{rawfile_path}"'
-                os.system(f'{tsdk} {param}') # call the tsdk command
+                try:                    
+                    param = f'-s "{input_path}/{im_name}" -a extract -o "{rawfile_path}"'
+                    os.system(f'{tsdk} {param}')
+                except Exception as e:
+                    print(f"Error converting R-JPEG to RAW {im_name}: {e}")
+                    continue
 
 def main(opt):
     
@@ -61,9 +65,12 @@ def main(opt):
             # -TagsFromFile: source file
             # -all: copy all tags
             # -overwrite_original: don't leave backup file
-            param = f'-tagsfromfile "{im_tmp_path}" -all:all -overwrite_original "{out_tif_path}"'
-            os.system(f'{opt.exiftool} {param}')
-
+            try:
+                param = f'-tagsfromfile "{im_tmp_path}" -all:all -overwrite_original "{out_tif_path}"'
+                os.system(f'{opt.exiftool} {param}')
+            except Exception as e:
+                print(f"Error writing EXIF data for {im_name}: {e}")
+                continue
 
 def parse_opt(known=False): 
     parser = argparse.ArgumentParser() 
@@ -79,15 +86,23 @@ def parse_opt(known=False):
        
 if __name__ == '__main__':
     opt = parse_opt(True)
-    # conversion from DJI M3T R-JPEG to RAW16 image
-    tsdk = ROOT / opt.tsdk / 'utility/bin/windows/release_x64/dji_irp.exe'
-    tmp_path = opt.output_path.parent / 'raw16'
-    call_tsdk(tsdk, opt.input_path, tmp_path, label=opt.label)    
     
-    opt.exiftool = ROOT / opt.exiftool / 'exiftool.exe'
+    # check if the os is window or linux
+    if platform.system() == 'Windows':
+        tsdk = Path(opt.tsdk) / 'utility/bin/windows/release_x64/dji_irp.exe'
+        opt.exiftool = Path(opt.exiftool) / 'exiftool.exe'
+    else:   
+        tsdk = Path(opt.tsdk) / 'utility/bin/linux/release_x64/dji_irp'
+        opt.exiftool = "perl " + str(Path(opt.exiftool) / 'exiftool')
+        
+     # check if the tsdk executable exists
+    tmp_path = opt.output_path.parent / 'raw16'
+    # conversion from DJI M3T R-JPEG to RAW16 image
+    call_tsdk(tsdk, opt.input_path, tmp_path, label=opt.label)    
+       
     main(opt)
     print("Conversion completed.")
     
     if tmp_path.exists():
         shutil.rmtree(tmp_path)  # remove the temporary raw16 folder
-    print(f"TIFF images are saved in: {opt.output_path}")
+    print(f"TIFF images are saved in: {Path(opt.output_path).resolve()}")

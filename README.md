@@ -12,10 +12,23 @@ Sample R-JPEG data is available from the repository [dji_h20t_rpeg_to_tif](https
 ### DJI thermal SDK
 1. Download the TSDK (DJI Thermal SDK) from the [official DJI site](https://www.dji.com/nl/downloads/softwares/dji-thermal-sdk).
 1. Unzip the TSDK into your project folder (the folder where you have cloned or forked this repository).
+- *Note: by default, the `release_x64` build is used.*
+
+    > On Linux: 
+    >
+    > Before runing the Python scripts to convert the R-JPEG to 16-bit TIFF, add  the directory containing `dji_irp` to your library path:
+    >```bash
+    > export LD_LIBRARY_PATH="/path/to/utility/bin/linux/release_x64:${LD_LIBRARY_PATH}"
+    >```
+    > Replace `/path/to/utility/bin/linux/release_x64` with the actual path where `dji_irp` resides.
 
 ### ExifTool
 1. Download the [exiftool](https://exiftool.org/).
-1. Unzip into your project folder, and rename `exiftool(-k).exe` to `exiftool.exe` for command-line compatibility.
+1. Unzip into your project folder
+   
+   > On Windows: 
+   >
+   > To enable command-line usage, rename `exiftool(-k).exe` to `exiftool.exe`.
 
 ## 🔄 Converting R-JPEG to 16-bit TIFF
 Run the script using the following command:
