@@ -95,7 +95,6 @@ if __name__ == '__main__':
         tsdk = Path(opt.tsdk) / 'utility/bin/linux/release_x64/dji_irp'
         opt.exiftool = "perl " + str(Path(opt.exiftool) / 'exiftool')
         
-     # check if the tsdk executable exists
     tmp_path = opt.output_path.parent / 'raw16'
     # conversion from DJI M3T R-JPEG to RAW16 image
     call_tsdk(tsdk, opt.input_path, tmp_path, label=opt.label)    
